@@ -878,6 +878,64 @@ if [[ ( $2 == "-i" ) || ( $2 == "-install" ) || ( $2 == "-add" ) ]]; then VCMD="
       # place component items
       # -> PLACE_REACT "$Components_" "path/.tsx" "$OldComponents_"
 
+      PLACE_REACT_WITH_ARG() {
+        if [[ 
+          ( $1 == "/"* ) || 
+          ( $1 == *"/.."* ) || 
+          ( $1 == *"../"* ) || 
+          ( $1 == *"/../"* ) || 
+          ( $1 == *"\n"* ) || 
+          ( $1 == *"@"* ) || 
+          ( $1 == *"\\"* )
+        ]]; then 
+          rm -R ".blueprint/tmp/$n"
+          PRINT FATAL "Component file paths cannot escape the components folder."
+          exit 1
+        fi
+
+        if [[ $3 != "$1" ]]; then
+          # remove old components
+          #arg={$4}
+          sed -i "s~""${s}@/blueprint/extensions/${identifier}/$3${e}""~~g" "$co"/"$2"
+          echo "test"
+          sed -i "s~<${identifier^}Component .*\/>~  ~g" "$co"/"$2"
+
+        fi
+        if [[ ! $1 == "" ]]; then
+
+          # validate file name
+          if [[ ${1} == *".tsx" ]] ||
+             [[ ${1} == *".ts"  ]] ||
+             [[ ${1} == *".jsx" ]] ||
+             [[ ${1} == *".js"  ]]; then 
+            rm -R ".blueprint/tmp/$n"
+            PRINT FATAL "Component paths may not end with a file extension."
+            exit 1
+          fi
+
+          # validate path
+          if [[ ! -f ".blueprint/tmp/$n/$dashboard_components/${1}.tsx" ]] &&
+             [[ ! -f ".blueprint/tmp/$n/$dashboard_components/${1}.ts"  ]] &&
+             [[ ! -f ".blueprint/tmp/$n/$dashboard_components/${1}.jsx" ]] &&
+             [[ ! -f ".blueprint/tmp/$n/$dashboard_components/${1}.js"  ]]; then 
+            rm -R ".blueprint/tmp/$n"
+            PRINT FATAL "Components configuration points towards one or more files that do not exist."
+            exit 1
+          fi
+
+          # Purge and add components.
+          sed -i \
+            -e "s~""${s}@/blueprint/extensions/${identifier}/$1${e}""~~g" \
+            -e "s~""<${identifier^}Component .*\ />""~~g" \
+            \
+            -e "s~""$im""~""${im}${s}@/blueprint/extensions/${identifier}/$1${e}""~g" \
+            -e "s~""$re""~""${re}\<${identifier^}Component arg={$4} />""~g" \
+            "$co"/"$2"
+        fi
+      }
+
+      # place component items
+      # -> PLACE_REACT_WITH_ARG "$Components_" "path/.tsx" "$OldComponents_" "arg"
 
       # navigation
       PLACE_REACT "$Components_Navigation_NavigationBar_BeforeNavigation" "Navigation/NavigationBar/BeforeNavigation.tsx" "$OldComponents_Navigation_NavigationBar_BeforeNavigation"
@@ -904,7 +962,7 @@ if [[ ( $2 == "-i" ) || ( $2 == "-install" ) || ( $2 == "-add" ) ]]; then VCMD="
       PLACE_REACT "$Components_Server_Terminal_AdditionalPowerButtons" "Server/Terminal/AdditionalPowerButtons.tsx" "$OldComponents_Server_Terminal_AdditionalPowerButtons"
       PLACE_REACT "$Components_Server_Terminal_BeforeInformation" "Server/Terminal/BeforeInformation.tsx" "$OldComponents_Server_Terminal_BeforeInformation"
       PLACE_REACT "$Components_Server_Terminal_AfterInformation" "Server/Terminal/AfterInformation.tsx" "$OldComponents_Server_Terminal_AfterInformation"
-      PLACE_REACT "$Components_Server_Terminal_CommandRow" "Server/Terminal/CommandRow.tsx" "$OldComponents_Server_Terminal_CommandRow"
+      PLACE_REACT "$Components_Server_Terminal_AdditionalConsole" "Server/Terminal/AdditionalConsole.tsx" "$OldComponents_Server_Terminal_AdditionalConsole"
       PLACE_REACT "$Components_Server_Terminal_AfterContent" "Server/Terminal/AfterContent.tsx" "$OldComponents_Server_Terminal_AfterContent"
 
       PLACE_REACT "$Components_Server_Files_Browse_BeforeContent" "Server/Files/Browse/BeforeContent.tsx" "$OldComponents_Server_Files_Browse_BeforeContent"
@@ -915,6 +973,7 @@ if [[ ( $2 == "-i" ) || ( $2 == "-install" ) || ( $2 == "-add" ) ]]; then VCMD="
       PLACE_REACT "$Components_Server_Files_Edit_AfterEdit" "Server/Files/Edit/AfterEdit.tsx" "$OldComponents_Server_Files_Edit_AfterEdit"
       
       PLACE_REACT "$Components_Server_Databases_BeforeContent" "Server/Databases/BeforeContent.tsx" "$OldComponents_Server_Databases_BeforeContent"
+      PLACE_REACT_WITH_ARG "$Components_Server_Databases_BeforeDatabaseRow" "Server/Databases/BeforeDatabaseRow.tsx" "$OldComponents_Server_Databases_BeforeDatabaseRow" "database"
       PLACE_REACT "$Components_Server_Databases_AfterContent" "Server/Databases/AfterContent.tsx" "$OldComponents_Server_Databases_AfterContent"
 
       PLACE_REACT "$Components_Server_Schedules_List_BeforeContent" "Server/Schedules/List/BeforeContent.tsx" "$OldComponents_Server_Schedules_List_BeforeContent"
@@ -1587,7 +1646,7 @@ if [[ ( $2 == "-r" ) || ( $2 == "-remove" ) ]]; then VCMD="y"
     REMOVE_REACT "$Components_Server_Terminal_AdditionalPowerButtons" "Server/Terminal/AdditionalPowerButtons.tsx"
     REMOVE_REACT "$Components_Server_Terminal_BeforeInformation" "Server/Terminal/BeforeInformation.tsx"
     REMOVE_REACT "$Components_Server_Terminal_AfterInformation" "Server/Terminal/AfterInformation.tsx"
-    REMOVE_REACT "$Components_Server_Terminal_CommandRow" "Server/Terminal/CommandRow.tsx"
+    REMOVE_REACT "$Components_Server_Terminal_AdditionalConsole" "Server/Terminal/AdditionalConsole.tsx"
     REMOVE_REACT "$Components_Server_Terminal_AfterContent" "Server/Terminal/AfterContent.tsx"
 
     REMOVE_REACT "$Components_Server_Files_Browse_BeforeContent" "Server/Files/Browse/BeforeContent.tsx"
@@ -1598,6 +1657,7 @@ if [[ ( $2 == "-r" ) || ( $2 == "-remove" ) ]]; then VCMD="y"
     REMOVE_REACT "$Components_Server_Files_Edit_AfterEdit" "Server/Files/Edit/AfterEdit.tsx"
     
     REMOVE_REACT "$Components_Server_Databases_BeforeContent" "Server/Databases/BeforeContent.tsx"
+    REMOVE_REACT "$Components_Server_Databases_BeforeDatabaseRow" "Server/Databases/BeforeDatabaseRow.tsx"
     REMOVE_REACT "$Components_Server_Databases_AfterContent" "Server/Databases/AfterContent.tsx"
 
     REMOVE_REACT "$Components_Server_Schedules_List_BeforeContent" "Server/Schedules/List/BeforeContent.tsx"
