@@ -101,14 +101,14 @@ export default ({ server, className }: { server: Server; className?: string }) =
                     <FontAwesomeIcon icon={faServer} />
                 </div>
                 <div>
-                    <BeforeEntryName />
+                    <BeforeEntryName server={server} />
                     <p css={tw`text-lg break-words`}>{server.name}</p>
-                    <AfterEntryName />
+                    <AfterEntryName server={server} />
                     {!!server.description && (
                         <div>
-                            <BeforeEntryDescription />
+                            <BeforeEntryDescription server={server} />
                             <p css={tw`text-sm text-neutral-300 break-words line-clamp-2`}>{server.description}</p>
-                            <AfterEntryDescription />
+                            <AfterEntryDescription server={server} />
                         </div>
                     )}
                 </div>
@@ -179,7 +179,7 @@ export default ({ server, className }: { server: Server; className?: string }) =
                             </div>
                             <p css={tw`text-xs text-neutral-600 text-center mt-1`}>of {diskLimit}</p>
                         </div>
-                        <ResourceLimits />
+                        <ResourceLimits server={server}/>
                     </React.Fragment>
                 )}
             </div>
