@@ -929,7 +929,7 @@ if [[ ( $2 == "-i" ) || ( $2 == "-install" ) || ( $2 == "-add" ) ]]; then VCMD="
             -e "s~""<${identifier^}Component .*\ />""~~g" \
             \
             -e "s~""$im""~""${im}${s}@/blueprint/extensions/${identifier}/$1${e}""~g" \
-            -e "s~""$re""~""${re}\<${identifier^}Component arg={$4} />""~g" \
+            -e "s~""$re""~""${re}\<${identifier^}Component $4={$4} />""~g" \
             "$co"/"$2"
         fi
       }

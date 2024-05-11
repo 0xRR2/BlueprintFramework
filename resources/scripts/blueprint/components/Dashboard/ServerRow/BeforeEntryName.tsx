@@ -3,7 +3,7 @@ import { Server } from '@/api/server/getServer';
 
 /* blueprint/import */
 
-export default (server: Server) => {
+export default ({ server }: Server) => {
   return (
     <>
       {/* blueprint/react */}
