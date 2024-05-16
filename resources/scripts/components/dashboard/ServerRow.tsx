@@ -17,6 +17,11 @@ import BeforeEntryDescription from '@/blueprint/components/Dashboard/ServerRow/B
 import AfterEntryDescription  from '@/blueprint/components/Dashboard/ServerRow/AfterEntryDescription';
 import ResourceLimits         from '@/blueprint/components/Dashboard/ServerRow/ResourceLimits';
 
+interface Props {
+    database: Server;
+    className?: string;
+}
+
 // Determines if the current value is in an alarm threshold so we can show it in red rather
 // than the more faded default style.
 const isAlarmState = (current: number, limit: number): boolean => limit > 0 && current / (limit * 1024 * 1024) >= 0.9;
@@ -55,7 +60,7 @@ const StatusIndicatorBox = styled(GreyRowBox)<{ $status: ServerPowerState | unde
 
 type Timer = ReturnType<typeof setInterval>;
 
-export default ({ server, className }: { server: Server; className?: string }) => {
+export default ({ server, className }: Props) => {
     const interval = useRef<Timer>(null) as React.MutableRefObject<Timer>;
     const [isSuspended, setIsSuspended] = useState(server.status === 'suspended');
     const [stats, setStats] = useState<ServerStats | null>(null);
