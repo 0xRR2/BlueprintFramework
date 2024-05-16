@@ -18,7 +18,7 @@ import AfterEntryDescription  from '@/blueprint/components/Dashboard/ServerRow/A
 import ResourceLimits         from '@/blueprint/components/Dashboard/ServerRow/ResourceLimits';
 
 interface Props {
-    database: Server;
+    server: Server;
     className?: string;
 }
 

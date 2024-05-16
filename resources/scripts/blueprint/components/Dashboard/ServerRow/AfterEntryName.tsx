@@ -3,7 +3,11 @@ import React from 'react';
 
 import { Server } from '@/api/server/getServer';
 
-export default ({ server }: Server) => {
+interface Props {
+  server: Server;
+}
+
+export default ({ server }: Props) => {
   return (
     <>
       {/* blueprint/react */}

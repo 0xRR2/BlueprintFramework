@@ -1,9 +1,13 @@
 import React from 'react';
-import { Server } from '@/api/server/getServer';
-
 /* blueprint/import */
 
-export default ({ server }: Server) => {
+import { Server } from '@/api/server/getServer';
+
+interface Props {
+  server: Server;
+}
+
+export default ({ server }: Props) => {
   return (
     <>
       {/* blueprint/react */}
