@@ -28,7 +28,7 @@ export default () => {
     const [showOnlyAdmin, setShowOnlyAdmin] = usePersistedState(`${uuid}:show_all_servers`, false);
 
     const { data: servers, error } = useSWR<PaginatedResult<Server>>(
-        ['/api/client/servers', showOnlyAdmin && rootAdmin, page],
+        ['/api/client/servers', showOnlyAdmin && rootAdmin, page, searchServer],
         () => getServers({ page, type: showOnlyAdmin && rootAdmin ? 'admin' : undefined, query: searchServer || undefined }),
     );
 
