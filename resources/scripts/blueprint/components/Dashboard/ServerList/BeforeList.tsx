@@ -2,7 +2,7 @@ import React from 'react';
 /* blueprint/import */
 
 type BeforeListProps = {
-  onChange: (string) => void;
+  onChange: (string: string) => void;
 }
 
 export default ({ onChange }: BeforeListProps) => {
