@@ -410,6 +410,8 @@ if [[ ( $2 == "-i" ) || ( $2 == "-install" ) || ( $2 == "-add" ) ]]; then VCMD="
   data_directory="$conf_data_directory"; #(optional)
   data_public="$conf_data_public"; #(optional)
 
+  permissions="$conf_permissions"; #(optional)
+
   requests_views="$conf_requests_views"; #(optional)
   requests_controllers="$conf_requests_controllers"; #(optional)
   requests_routers="$conf_requests_routers"; #(optional)
@@ -947,11 +949,14 @@ if [[ ( $2 == "-i" ) || ( $2 == "-install" ) || ( $2 == "-add" ) ]]; then VCMD="
       PLACE_REACT "$Components_Navigation_SubNavigation_AfterSubNavigation" "Navigation/SubNavigation/AfterSubNavigation.tsx" "$OldComponents_Navigation_SubNavigation_AfterSubNavigation"
 
       # dashboard
-      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_BeforeEntryName" "Dashboard/ServerRow/BeforeEntryName.tsx" "$OldComponents_Dashboard_ServerRow_BeforeEntryName" "server"
-      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_AfterEntryName" "Dashboard/ServerRow/AfterEntryName.tsx" "$OldComponents_Dashboard_ServerRow_AfterEntryName" "server"
-      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_BeforeEntryDescription" "Dashboard/ServerRow/BeforeEntryDescription.tsx" "$OldComponents_Dashboard_ServerRow_BeforeEntryDescription" "server"
-      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_AfterEntryDescription" "Dashboard/ServerRow/AfterEntryDescription.tsx" "$OldComponents_Dashboard_ServerRow_AfterEntryDescription" "server"
-      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_ResourceLimits" "Dashboard/ServerRow/ResourceLimits.tsx" "$OldComponents_Dashboard_ServerRow_ResourceLimits" "server"
+
+      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerList_BeforeList" "Dashboard/ServerList/BeforeList.tsx" "$OldComponents_Dashboard_ServerList_BeforeList" "onChange"
+
+      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_BeforeEntryName" "Dashboard/ServerRow/BeforeEntryName.tsx" "$OldComponents_Dashboard_ServerRow_BeforeEntryName"
+      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_AfterEntryName" "Dashboard/ServerRow/AfterEntryName.tsx" "$OldComponents_Dashboard_ServerRow_AfterEntryName"
+      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_BeforeEntryDescription" "Dashboard/ServerRow/BeforeEntryDescription.tsx" "$OldComponents_Dashboard_ServerRow_BeforeEntryDescription"
+      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_AfterEntryDescription" "Dashboard/ServerRow/AfterEntryDescription.tsx" "$OldComponents_Dashboard_ServerRow_AfterEntryDescription"
+      PLACE_REACT_WITH_ARG "$Components_Dashboard_ServerRow_ResourceLimits" "Dashboard/ServerRow/ResourceLimits.tsx" "$OldComponents_Dashboard_ServerRow_ResourceLimits"
 
       # authentication
       PLACE_REACT "$Components_Authentication_Container_BeforeContent" "Authentication/Container/BeforeContent.tsx" "$OldComponents_Authentication_Container_BeforeContent"
